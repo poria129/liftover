@@ -25,7 +25,6 @@ with open(input_file, "r") as fin, open(output_file, "w") as fout, open(
         if chrom == "MT" or chrom == "26":
             ucsc_chrom = "chrM"
         elif chrom == "XY":
-            # XY is non-standard; no such chromosome in UCSC reference genomes
             funmapped.write(line)
             continue
         elif chrom == "24":
@@ -41,7 +40,6 @@ with open(input_file, "r") as fin, open(output_file, "w") as fout, open(
             new_chrom, new_start, strand, _ = lifted[0]
             new_end = new_start + (end - start)
 
-            # Remove "chr" prefix from output as per your request
             new_chrom = new_chrom.replace("chr", "")
             new_fields = [new_chrom, str(int(new_start)), str(int(new_end))] + fields[
                 3:
