@@ -4,7 +4,7 @@ from pyliftover import LiftOver
 lo = LiftOver("hg19ToHg38.over.chain.gz")
 
 # Input and output files
-input_file = "converted_output_37.bed"
+input_file = "axiom_37.bed"
 output_file = "output_hg38.bed"
 unmapped_file = "unmapped.bed"
 
@@ -22,12 +22,16 @@ with open(input_file, "r") as fin, open(output_file, "w") as fout, open(
         end = int(fields[2])
 
         # UCSC LiftOver expects "chr1", "chr2", ..., "chrX", "chrY", "chrM"
-        if chrom == "MT":
+        if chrom == "MT" or chrom == "26":
             ucsc_chrom = "chrM"
         elif chrom == "XY":
             # XY is non-standard; no such chromosome in UCSC reference genomes
             funmapped.write(line)
             continue
+        elif chrom == "24":
+            chrom = "chrX"
+        elif chrom == "25":
+            chrom = "chrY"
         else:
             ucsc_chrom = f"chr{chrom}"
 
